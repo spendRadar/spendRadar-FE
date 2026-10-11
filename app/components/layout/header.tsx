@@ -1,5 +1,6 @@
 import { Bell } from 'lucide-react';
 import { useState } from 'react';
+import { Button } from '../ui/button';
 
 const navItems = [
   { label: '가계부' },
@@ -24,27 +25,28 @@ function Header() {
         </div>
         <nav className='items-center rounded-full bg-[#eff4ff] p-1 gap-2 hidden sm:flex'>
           {navItems.map((item, index) => (
-            <button
+            <Button
               key={item.label}
               type='button'
+              variant={activeTab === index ? 'default' : 'ghost'}
               className={
                 activeTab === index
-                  ? 'rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground'
-                  : 'rounded-full px-4 py-2 text-sm font-semibold text-secondary-foreground hover:bg-tertiary/10'
+                  ? 'h-auto rounded-full px-4 py-2 text-sm font-semibold'
+                  : 'h-auto rounded-full px-4 py-2 text-sm font-semibold text-secondary-foreground hover:bg-tertiary/10'
               }
               onClick={() => handleTabClick(index)}
             >
               {item.label}
-            </button>
+            </Button>
           ))}
         </nav>
         <div className='flex items-center justify-center'>
-          <button type='button' className='hover:bg-tertiary/10 rounded-full p-2'>
+          <Button variant='ghost' className='hover:bg-tertiary/10 rounded-full p-2'>
             <div className='relative'>
               <Bell className='size-5' />
               <div className='absolute -top-1 -right-1 size-2 rounded-full bg-red-500' />
             </div>
-          </button>
+          </Button>
         </div>
       </div>
     </header>
