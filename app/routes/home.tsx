@@ -1,4 +1,4 @@
-import { ArrowUp, CircleAlert } from 'lucide-react';
+import { ArrowUp, CircleAlert, ShoppingBasket } from 'lucide-react';
 import SummaryCard from '~/components/ui/summaryCard';
 import type { Route } from './+types/home';
 import TransactionsCard from '~/components/ui/transactionsCard';
@@ -42,7 +42,13 @@ export default function Home() {
         />
       </div>
       <div>
-        <TransactionsCard />
+        <TransactionsCard
+          name='씨유(CU) 태평본점'
+          category='편의점'
+          account='토스뱅크 통장'
+          amount={-2500}
+          icon={ShoppingBasket}
+        />
       </div>
     </div>
   );
