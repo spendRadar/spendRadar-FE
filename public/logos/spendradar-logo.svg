@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="title desc">
+  <title id="title">SpendRadar logo</title>
+  <desc id="desc">A mint green circle and a cyan orbit surrounding a white sparkle on a deep navy rounded-square background.</desc>
+  <rect width="64" height="64" rx="16" fill="#0F172A" />
+  <circle cx="26" cy="29.3" r="12.6" fill="#01B382" />
+  <path d="M36.2 19.2 C44.4 18.5 50.3 25.5 50.3 33.3 C50.3 42.2 43.8 46.6 35.6 46.6 C27.5 46.6 22.9 41.3 22.9 31.6" fill="none" stroke="#38BDF8" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M39.7 25.3 C40.8 30.3 42.5 32.3 46.5 33.5 C42.5 34.7 40.8 36.6 39.7 41.6 C38.6 36.6 36.9 34.7 32.9 33.5 C36.9 32.3 38.6 30.3 39.7 25.3 Z" fill="#FFFFFF" />
+</svg>
