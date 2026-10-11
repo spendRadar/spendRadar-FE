@@ -1,3 +1,4 @@
+import SummaryCard from '~/components/ui/summaryCard';
 import type { Route } from './+types/home';
 
 export function meta(_: Route.MetaArgs) {
@@ -8,5 +9,12 @@ export function meta(_: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <div>Home Page</div>;
+  return (
+    <div className='mx-auto grid w-full max-w-200 grid-cols-2 gap-5 px-4 pt-24 md:grid-cols-4'>
+      <SummaryCard />
+      <SummaryCard />
+      <SummaryCard />
+      <SummaryCard />
+    </div>
+  );
 }
