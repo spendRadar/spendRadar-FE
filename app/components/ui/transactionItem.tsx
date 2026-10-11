@@ -22,7 +22,7 @@ function TransactionIcon({ icon: Icon }: { icon: LucideIcon }) {
 
 function TransactionItem({ name, category, account, amount, icon }: TransactionItemProps) {
   return (
-    <div className='flex h-auto min-h-20 w-full flex-row items-center justify-between bg-white hover:bg-tertiary/10'>
+    <div className='flex h-auto min-h-20 w-full flex-row items-center justify-between bg-white hover:bg-tertiary/10 p-4 rounded-md'>
       <div className='flex flex-row items-center gap-2'>
         <div className='flex size-10 items-center justify-center rounded-full bg-primary/10'>
           <TransactionIcon icon={icon} />
