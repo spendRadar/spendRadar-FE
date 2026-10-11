@@ -20,15 +20,43 @@ import {
 import { Separator } from '../ui/separator';
 const years = Array.from({ length: 2026 - 2010 + 1 }, (_, index) => 2026 - index).reverse();
 const months = Array.from({ length: 12 }, (_, index) => index + 1);
+const firstYear = years[0];
+const lastYear = years[years.length - 1];
 
-function TransactionToolBar() {
+function shiftPeriod(year: number, month: number, direction: -1 | 1) {
+  const monthIndex = (year - firstYear) * 12 + (month - 1) + direction;
+  const lastMonthIndex = (lastYear - firstYear + 1) * 12 - 1;
+
+  if (monthIndex < 0 || monthIndex > lastMonthIndex) {
+    return null;
+  }
+
+  return {
+    year: firstYear + Math.floor(monthIndex / 12),
+    month: (monthIndex % 12) + 1,
+  };
+}
+
+interface TransactionToolBarProps {
+  selectedYear: number;
+  selectedMonth: number;
+  onPeriodChange: (year: number, month: number) => void;
+}
+
+function TransactionToolBar({
+  selectedYear,
+  selectedMonth,
+  onPeriodChange,
+}: TransactionToolBarProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedYear, setSelectedYear] = useState(2025);
-  const [selectedMonth, setSelectedMonth] = useState(3);
-  const [draftYear, setDraftYear] = useState(2025);
-  const [draftMonth, setDraftMonth] = useState(3);
-  const [yearStartIndex, setYearStartIndex] = useState(() => Math.max(years.indexOf(2025), 0));
-  const [monthStartIndex, setMonthStartIndex] = useState(() => Math.max(months.indexOf(3), 0));
+  const [draftYear, setDraftYear] = useState(selectedYear);
+  const [draftMonth, setDraftMonth] = useState(selectedMonth);
+  const [yearStartIndex, setYearStartIndex] = useState(() =>
+    Math.max(years.indexOf(selectedYear), 0),
+  );
+  const [monthStartIndex, setMonthStartIndex] = useState(() =>
+    Math.max(months.indexOf(selectedMonth), 0),
+  );
   const yearApiRef = useRef<CarouselApi>(undefined);
   const monthApiRef = useRef<CarouselApi>(undefined);
   const shouldCommitRef = useRef(false);
@@ -73,15 +101,30 @@ function TransactionToolBar() {
 
   function handleConfirm() {
     shouldCommitRef.current = true;
-    setSelectedYear(draftYear);
-    setSelectedMonth(draftMonth);
+    onPeriodChange(draftYear, draftMonth);
     setIsOpen(false);
+  }
+
+  function handleShiftPeriod(direction: -1 | 1) {
+    const nextPeriod = shiftPeriod(selectedYear, selectedMonth, direction);
+
+    if (!nextPeriod) {
+      return;
+    }
+
+    onPeriodChange(nextPeriod.year, nextPeriod.month);
   }
 
   return (
     <div className='flex flex-row gap-6 bg-white p-6 items-center justify-between rounded-2xl'>
       <div className='flex flex-row items-center gap-2 bg-tertiary/10 rounded-full px-4 py-2'>
-        <Button variant='ghost' className='hover:bg-tertiary/20 rounded-full p-1'>
+        <Button
+          type='button'
+          variant='ghost'
+          className='hover:bg-tertiary/20 rounded-full p-1'
+          disabled={shiftPeriod(selectedYear, selectedMonth, -1) === null}
+          onClick={() => handleShiftPeriod(-1)}
+        >
           <ChevronLeft className='size-5' />
         </Button>
         <Dialog open={isOpen} onOpenChange={handleOpenChange}>
@@ -176,7 +219,13 @@ function TransactionToolBar() {
             </div>
           </DialogContent>
         </Dialog>
-        <Button variant='ghost' className='hover:bg-tertiary/20 rounded-full p-1'>
+        <Button
+          type='button'
+          variant='ghost'
+          className='hover:bg-tertiary/20 rounded-full p-1'
+          disabled={shiftPeriod(selectedYear, selectedMonth, 1) === null}
+          onClick={() => handleShiftPeriod(1)}
+        >
           <ChevronRight className='size-5' />
         </Button>
       </div>

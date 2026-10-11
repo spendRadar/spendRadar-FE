@@ -4,17 +4,11 @@ import TransactionsCard from '~/components/ui/transactionsCard';
 import { mockTransactionMonths } from '~/mocks/transactions';
 import type { Route } from './+types/home';
 import TransactionToolBar from '~/components/layout/transactionToolBar';
+import type { TransactionMonth } from '~/types/transaction';
+import { useState } from 'react';
 
-function seoulYearMonth(date: Date) {
-  const parts = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Asia/Seoul',
-    year: 'numeric',
-    month: 'numeric',
-  }).formatToParts(date);
-  const year = Number(parts.find((part) => part.type === 'year')?.value);
-  const month = Number(parts.find((part) => part.type === 'month')?.value);
-
-  return { year, month };
+function monthAmount(month: TransactionMonth, kind: 'income' | 'expense') {
+  return month.days.reduce((total, day) => total + day.summary[kind], 0);
 }
 
 export function meta(_: Route.MetaArgs) {
@@ -25,25 +19,39 @@ export function meta(_: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const { year, month } = seoulYearMonth(new Date());
-  const currentMonth =
-    mockTransactionMonths.find((item) => item.year === year && item.month === month) ??
-    mockTransactionMonths[0];
+  const [selectedYear, setSelectedYear] = useState(2025);
+  const [selectedMonth, setSelectedMonth] = useState(3);
+  const currentMonth = mockTransactionMonths.find(
+    (item) => item.year === selectedYear && item.month === selectedMonth,
+  ) ?? {
+    year: selectedYear,
+    month: selectedMonth,
+    days: [],
+  };
+
+  function handlePeriodChange(year: number, month: number) {
+    setSelectedYear(year);
+    setSelectedMonth(month);
+  }
 
   return (
     <div className='mx-auto flex w-full max-w-240 flex-col gap-5 px-4 pt-24'>
-      <TransactionToolBar />
+      <TransactionToolBar
+        selectedYear={selectedYear}
+        selectedMonth={selectedMonth}
+        onPeriodChange={handlePeriodChange}
+      />
       <div className='grid grid-cols-2 gap-5 lg:grid-cols-4'>
         <SummaryCard
           kind='income'
-          amount={1000000000}
+          amount={monthAmount(currentMonth, 'income')}
           markContent='8.4%'
           markIcon={ArrowUp}
           subContent='전월 대비'
         />
         <SummaryCard
           kind='expense'
-          amount={100000}
+          amount={monthAmount(currentMonth, 'expense')}
           markContent='4.1%'
           markIcon={CircleAlert}
           subContent='예산의 82%'
