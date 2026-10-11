@@ -1,7 +1,64 @@
-import { ArrowUp, CircleAlert } from 'lucide-react';
+import { ArrowUp, CircleAlert, ShoppingBasket } from 'lucide-react';
 import SummaryCard from '~/components/ui/summaryCard';
-import type { Route } from './+types/home';
 import TransactionsCard from '~/components/ui/transactionsCard';
+import type { TransactionMonth } from '~/types/transaction';
+import type { Route } from './+types/home';
+
+function seoulISODate(date: Date) {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date);
+}
+
+function shiftISODate(isoDate: string, days: number) {
+  const [year, month, day] = isoDate.split('-').map(Number);
+  const shifted = new Date(Date.UTC(year, month - 1, day + days));
+  const nextYear = shifted.getUTCFullYear();
+  const nextMonth = String(shifted.getUTCMonth() + 1).padStart(2, '0');
+  const nextDay = String(shifted.getUTCDate()).padStart(2, '0');
+
+  return `${nextYear}-${nextMonth}-${nextDay}`;
+}
+
+function createSampleMonth(): TransactionMonth {
+  const today = seoulISODate(new Date());
+  const yesterday = shiftISODate(today, -1);
+  const [year, month] = today.split('-').map(Number);
+  const convenience = {
+    name: '씨유(CU) 태평본점',
+    category: '편의점',
+    account: '토스뱅크 통장',
+    amount: -2500,
+    icon: ShoppingBasket,
+  };
+
+  return {
+    year,
+    month,
+    days: [
+      {
+        date: today,
+        summary: { expense: 7500, income: 0 },
+        transactions: [
+          { id: 'today-1', ...convenience },
+          { id: 'today-2', ...convenience },
+          { id: 'today-3', ...convenience },
+        ],
+      },
+      {
+        date: yesterday,
+        summary: { expense: 5000, income: 123123 },
+        transactions: [
+          { id: 'yesterday-1', ...convenience },
+          { id: 'yesterday-2', ...convenience },
+        ],
+      },
+    ],
+  };
+}
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -42,7 +99,7 @@ export default function Home() {
         />
       </div>
       <div>
-        <TransactionsCard />
+        <TransactionsCard month={createSampleMonth()} />
       </div>
     </div>
   );

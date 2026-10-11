@@ -1,86 +1,91 @@
+import { Dot } from 'lucide-react';
+import type { TransactionDay, TransactionMonth } from '~/types/transaction';
 import TransactionItem from './transactionItem';
-import { Dot, ShoppingBasket } from 'lucide-react';
 
-function TransactionsCard() {
+interface TransactionsCardProps {
+  month: TransactionMonth;
+}
+
+function seoulISODate(date: Date) {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date);
+}
+
+function formatWon(amount: number) {
+  return `${new Intl.NumberFormat('ko-KR', { maximumFractionDigits: 0 }).format(amount)}원`;
+}
+
+function formatDayHeading(date: string) {
+  const [, month, day] = date.split('-');
+
+  return `${Number(month)}월 ${Number(day)}일`;
+}
+
+function formatDayBadge(date: string, today: string) {
+  if (date === today) {
+    return '오늘';
+  }
+
+  return new Intl.DateTimeFormat('ko-KR', {
+    timeZone: 'Asia/Seoul',
+    weekday: 'long',
+  }).format(new Date(`${date}T00:00:00+09:00`));
+}
+
+function DaySection({ day, today }: { day: TransactionDay; today: string }) {
+  return (
+    <>
+      <div className='flex flex-col gap-2'>
+        <div className='flex flex-row items-center justify-between'>
+          <div className='flex flex-row items-center gap-3'>
+            <span className='text-base font-bold'>{formatDayHeading(day.date)}</span>
+            <span className='text-sm font-bold text-red-500'>
+              {formatDayBadge(day.date, today)}
+            </span>
+          </div>
+          <div className='flex flex-row items-center gap-1 text-sm text-red-500'>
+            <span>지출 {formatWon(day.summary.expense)}</span>
+            <Dot className='size-2' />
+            <span>수입 {formatWon(day.summary.income)}</span>
+          </div>
+        </div>
+        <div className='h-px w-full bg-border' />
+      </div>
+      <div className='flex flex-col'>
+        {day.transactions.map((transaction) => (
+          <TransactionItem
+            key={transaction.id}
+            name={transaction.name}
+            category={transaction.category}
+            account={transaction.account}
+            amount={transaction.amount}
+            icon={transaction.icon}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
+
+function TransactionsCard({ month }: TransactionsCardProps) {
+  const today = seoulISODate(new Date());
+  const transactionCount = month.days.reduce((count, day) => count + day.transactions.length, 0);
+
   return (
     <div className='flex flex-col gap-6 bg-white p-6'>
       <div className='flex flex-row items-center gap-4'>
-        <span className='text-xl font-bold'>3월 거래 내역</span>
-        <span className='text-sm bg-tertiary/10 text-gray-500 rounded-full px-2 py-1 font-bold'>
-          총 42건
+        <span className='text-xl font-bold'>{month.month}월 거래 내역</span>
+        <span className='rounded-full bg-tertiary/10 px-2 py-1 text-sm font-bold text-gray-500'>
+          총 {transactionCount}건
         </span>
       </div>
-      <div className='flex flex-col gap-2'>
-        <div className='flex flex-row items-center justify-between'>
-          <div className='flex flex-row gap-3 items-center'>
-            <span className='text-base font-bold'>3월 24일</span>
-            <span className='text-sm text-red-500 font-bold'>오늘</span>
-          </div>
-          <div className='flex flex-row gap-1 items-center text-sm text-red-500'>
-            <span>지출 123,123원</span> <Dot className='size-2' /> <span>수입 123,123원</span>
-          </div>
-        </div>
-        <div className='h-px w-full bg-border' />
-      </div>
-      <div className='flex flex-col'>
-        <TransactionItem
-          name='씨유(CU) 태평본점'
-          category='편의점'
-          account='토스뱅크 통장'
-          amount={-2500}
-          icon={ShoppingBasket}
-        />
-        <TransactionItem
-          name='씨유(CU) 태평본점'
-          category='편의점'
-          account='토스뱅크 통장'
-          amount={-2500}
-          icon={ShoppingBasket}
-        />
-        <TransactionItem
-          name='씨유(CU) 태평본점'
-          category='편의점'
-          account='토스뱅크 통장'
-          amount={-2500}
-          icon={ShoppingBasket}
-        />
-      </div>
-
-      <div className='flex flex-col gap-2'>
-        <div className='flex flex-row items-center justify-between'>
-          <div className='flex flex-row gap-3 items-center'>
-            <span className='text-base font-bold'>3월 23일</span>
-            <span className='text-sm text-red-500 font-bold'>금요일</span>
-          </div>
-          <div className='flex flex-row gap-1 items-center text-sm text-red-500'>
-            <span>지출 123,123원</span> <Dot className='size-2' /> <span>수입 123,123원</span>
-          </div>
-        </div>
-        <div className='h-px w-full bg-border' />
-      </div>
-      <div className='flex flex-col'>
-        <TransactionItem
-          name='씨유(CU) 태평본점'
-          category='편의점'
-          account='토스뱅크 통장'
-          amount={-2500}
-          icon={ShoppingBasket}
-        />
-        <TransactionItem
-          name='씨유(CU) 태평본점'
-          category='편의점'
-          account='토스뱅크 통장'
-          amount={-2500}
-          icon={ShoppingBasket}
-        />
-        <TransactionItem
-          name='씨유(CU) 태평본점'
-          category='편의점'
-          account='토스뱅크 통장'
-          amount={-2500}
-          icon={ShoppingBasket}
-        />
-      </div>
+      {month.days.map((day) => (
+        <DaySection key={day.date} day={day} today={today} />
+      ))}
     </div>
   );
 }
