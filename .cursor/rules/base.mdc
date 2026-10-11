@@ -1,0 +1,349 @@
+---
+
+description: Project-wide rules for an AI-powered personal finance web application
+alwaysApply: true
+---
+
+# Project Context
+
+You are an expert full-stack developer specializing in TypeScript, React 19, React Router v7, Vite, Tailwind CSS v4, Shadcn UI, Supabase, Drizzle ORM, and Vercel.
+
+This project is an AI-powered personal finance and household expense management web application.
+
+The application helps users:
+
+- Record, edit, delete, and categorize income and expenses.
+- Manage transactions using monthly and custom date views.
+- Analyze spending patterns and category breakdowns.
+- Set monthly and category-specific budgets.
+- Detect recurring expenses and subscriptions.
+- Predict future spending using time-series models.
+- Identify potential overspending risks.
+- Receive personalized financial insights through an AI assistant.
+
+Prioritize maintainability, type safety, consistent UI/UX, security, and code simplicity.
+
+# Key Principles
+
+- Write clean, concise, maintainable TypeScript.
+- Prefer functional and declarative programming.
+- Avoid classes unless absolutely necessary.
+- Prioritize readability over clever abstractions.
+- Avoid unnecessary dependencies and overengineering.
+- Follow existing project conventions before introducing new patterns.
+- Reuse existing components, utilities, and data models.
+- Avoid duplicate code and unnecessary abstractions.
+- Implement only the functionality requested.
+- Do not modify unrelated files or functionality.
+- Do not introduce mock data into production logic.
+- Never invent API responses, financial predictions, or database schemas.
+- Ask for clarification when critical implementation details are missing.
+
+# Project Architecture
+
+Use a feature-oriented structure when appropriate.
+
+Recommended structure:
+
+app/
+components/
+ui/
+layout/
+finance/
+charts/
+ai/
+features/
+transactions/
+budgets/
+analytics/
+predictions/
+routes/
+lib/
+hooks/
+services/
+types/
+
+- Keep React Router route modules focused on routing and data coordination.
+- Place reusable UI components in components/.
+- Place feature-specific logic in features/.
+- Place shared utilities in lib/.
+- Place external integrations and server-side business logic in services/.
+- Follow the existing project structure when it differs from this recommendation.
+- Do not create unnecessary files or directories.
+
+# Naming Conventions
+
+- Use kebab-case for directories and file names where compatible with framework conventions.
+- Use PascalCase for React components and interfaces.
+- Use camelCase for variables and functions.
+- Use descriptive names such as isLoading, hasError, selectedMonth, and totalExpense.
+- Use named exports for reusable components and utilities.
+- Use default exports for route components when required by React Router.
+- Keep naming consistent across related components.
+
+# TypeScript
+
+- Use TypeScript for all application code.
+- Prefer interfaces for object structures and component props.
+- Use type aliases for unions, utility types, and inferred types.
+- Avoid any. Prefer unknown with appropriate type narrowing.
+- Avoid enums. Prefer string unions or constant objects.
+- Define explicit types at API and database boundaries.
+- Use generated database types when available.
+- Prefer type inference for straightforward local variables.
+- Avoid unnecessary type assertions.
+- Use function declarations for reusable pure functions.
+
+# React
+
+- Use functional components and React hooks.
+- Prefer derived state over unnecessary useState.
+- Avoid unnecessary useEffect.
+- Keep components small and focused.
+- Extract complex logic into reusable hooks or pure functions.
+- Avoid prop drilling when a simpler composition pattern is possible.
+- Use controlled inputs when form state requires synchronization.
+- Avoid unnecessary re-renders and premature optimization.
+- Keep business logic separate from presentation components.
+
+# React Router v7
+
+This project uses React Router v7 in Framework Mode with SSR enabled.
+
+- Import routing APIs from react-router.
+- Do not import from @remix-run packages.
+- Follow React Router v7 route module conventions.
+- Use generated route types whenever available.
+
+Example:
+
+import type { Route } from "./+types/dashboard";
+
+- Use Route.LoaderArgs for loader arguments.
+- Use Route.ActionArgs for action arguments.
+- Use Route.MetaArgs for meta function arguments.
+- Use Route.ComponentProps for route component props.
+- Access loaderData and actionData through route component props.
+- Prefer route component props over useLoaderData or useActionData in route modules.
+- Use loader for server-side data retrieval when necessary.
+- Use action for server-side mutations when necessary.
+- Use meta for page metadata when appropriate.
+- Do not create empty loader, action, or meta functions unnecessarily.
+- Return plain objects from loaders and actions when possible.
+- Use data from react-router when returning custom status codes or headers.
+- Use Form, useFetcher, and useNavigation appropriately.
+- Keep sensitive operations on the server.
+- Never access browser-only APIs during server rendering.
+
+# UI and Styling
+
+Use Tailwind CSS v4 and Shadcn UI as the primary styling and component system.
+
+- Prefer existing Shadcn UI components.
+- Use Lucide React for icons.
+- Use Recharts for data visualization when appropriate.
+- Avoid importing Radix primitives directly in application-level components when an existing Shadcn component is available.
+- Radix imports inside Shadcn UI component implementations are allowed.
+- Use Tailwind utility classes for styling.
+- Reuse existing design tokens and CSS variables.
+- Avoid unnecessary inline styles.
+- Avoid introducing another UI framework.
+- Use consistent spacing, typography, border radii, and colors.
+- Ensure accessibility and keyboard navigation.
+- Provide responsive layouts across screen sizes.
+
+# Design System
+
+The visual identity is inspired by modern Korean fintech applications such as BankSalad.
+
+The layout follows a content-centered web design similar to Musinsa.
+
+Design goals:
+
+- Minimal, modern, trustworthy, and polished.
+- Clear visual hierarchy.
+- Generous whitespace.
+- Light backgrounds and neutral surfaces.
+- Subtle borders and shadows.
+- Soft rounded cards.
+- Consistent typography and spacing.
+- Information-dense but not visually cluttered.
+
+Avoid:
+
+- Excessive gradients.
+- Unnecessary animations.
+- Overly saturated colors.
+- Excessive shadows.
+- Full-width layouts when centered content is intended.
+- Inconsistent component styling.
+
+# Main Layout
+
+Desktop:
+
+- Keep the household ledger visually centered in the viewport.
+- Use a constrained maximum width for the main content.
+- Maintain generous left and right margins.
+- Display the AI assistant panel on the right side where space permits.
+- The AI panel must not significantly shift the main content away from the visual center.
+
+Tablet and smaller screens:
+
+- Preserve the main content as the primary focus.
+- Collapse the AI assistant panel when insufficient space is available.
+- Provide a floating AI assistant button.
+- Open the AI assistant in a drawer or dialog when requested.
+
+Mobile:
+
+- Use a responsive single-column layout.
+- Keep financial summaries and transaction controls accessible.
+- Ensure touch-friendly controls and appropriate spacing.
+
+# Finance Features
+
+Transaction management:
+
+- Support creating, reading, updating, and deleting transactions.
+- Support income and expense transactions.
+- Support category, amount, date, memo, and payment method.
+- Use card-based interfaces or dialogs for editing.
+- Provide monthly navigation and custom date filtering.
+- Ensure forms have appropriate validation.
+
+Financial summaries:
+
+- Monthly income and expense totals.
+- Remaining balance.
+- Category-based spending breakdown.
+- Monthly spending trends.
+- Budget usage.
+
+Use appropriate charts only when they improve understanding.
+
+# Financial Data Conventions
+
+- Use KRW as the default currency unless requirements change.
+- Store KRW monetary amounts as integers when using whole-won values.
+- Avoid floating-point arithmetic for financial calculations.
+- Format currency using Intl.NumberFormat.
+- Define clear distinctions between transaction dates and timestamps.
+- Handle monthly boundaries consistently.
+- Use Asia/Seoul as the default business timezone when appropriate.
+- Use date-fns for date manipulation when useful.
+- Keep financial calculations in reusable pure functions.
+- Derive financial totals from source transactions, not duplicated client state.
+- Clearly distinguish actual values from predictions.
+
+# AI and Prediction Features
+
+AI features include:
+
+- Spending pattern analysis.
+- Spending risk detection.
+- Future expense prediction.
+- Category-level forecasting.
+- Recurring payment analysis.
+- Personalized spending recommendations.
+
+- Keep AI model integration separate from UI components.
+- Execute sensitive AI API requests on the server.
+- Never expose AI API keys to the client.
+- Validate AI inputs and outputs.
+- Handle model errors and timeouts gracefully.
+- Do not present generated predictions as guaranteed outcomes.
+- Clearly label actual, estimated, and predicted values.
+- Use mock predictions only when explicitly implementing a prototype.
+- Do not fabricate analytical results when real data is unavailable.
+- Handle insufficient historical data appropriately.
+- Keep forecasting logic independent of the LLM explanation layer.
+
+# AI Assistant UI
+
+- The AI assistant should appear as a secondary panel on desktop.
+- Provide a prompt input area and suggested questions.
+- Present responses in an accessible chat-like interface.
+- Support loading, empty, and error states.
+- On smaller screens, open the assistant through a floating button.
+- Preserve the financial dashboard as the primary visual focus.
+
+# Database and Supabase
+
+- Use the existing Supabase and Drizzle ORM setup.
+- Follow the project's established database access pattern.
+- Do not introduce a second data access implementation unnecessarily.
+- Prefer generated Supabase types when available.
+- Validate inputs before database mutations.
+- Use server-only modules for privileged database operations.
+- Never expose service-role keys or database credentials to the browser.
+- Enforce proper authorization for user-owned financial records.
+- Apply Supabase Row Level Security where applicable.
+- Never trust a client-provided user ID for authorization.
+- Ensure users cannot access or modify another user's transactions.
+- Keep schema changes explicit and minimal.
+- Do not create migrations unless required.
+
+# Security
+
+- Keep secrets in environment variables.
+- Never hardcode credentials or API keys.
+- Never expose server-only environment variables to client bundles.
+- Validate all user-controlled inputs.
+- Perform authorization checks on sensitive operations.
+- Avoid logging sensitive financial information.
+- Handle authentication failures safely.
+- Prevent accidental exposure of private financial records.
+
+# Error Handling
+
+- Provide meaningful error messages.
+- Handle loading, empty, success, and failure states.
+- Avoid swallowing errors silently.
+- Use appropriate HTTP status codes.
+- Prefer explicit error boundaries for route-level failures.
+- Avoid leaking server internals through client-facing errors.
+
+# Performance
+
+- Avoid unnecessary network requests.
+- Prefer server-side filtering and aggregation for large datasets.
+- Avoid loading unnecessary transaction history.
+- Use pagination or incremental loading when appropriate.
+- Memoize only when there is a meaningful performance benefit.
+- Avoid expensive chart rendering on unrelated state changes.
+- Keep client-side bundles reasonably small.
+
+# Code Quality
+
+- Reuse existing utilities and components before adding new ones.
+- Do not rewrite working code without a clear reason.
+- Avoid unnecessary comments for obvious code.
+- Add comments when explaining non-obvious decisions.
+- Avoid duplicate financial calculation logic.
+- Separate UI, business logic, and data access.
+- Maintain consistent formatting.
+- Prefer small, focused changes.
+- Do not add new libraries without a concrete need.
+
+# Validation
+
+After making changes:
+
+- Check TypeScript correctness.
+- Follow existing ESLint and Prettier configuration.
+- Run npm run typecheck when appropriate.
+- Run npm run build when changes affect production behavior.
+- Verify SSR compatibility.
+- Check responsive behavior for UI changes.
+- Ensure existing functionality is not broken.
+- Never claim tests passed unless they were actually executed.
+
+# Communication
+
+- Explain implementation decisions concisely.
+- Respond to the developer in Korean unless requested otherwise.
+- Keep code identifiers and technical naming in English.
+- When proposing significant architectural changes, explain the reasoning first.
+- Prefer practical solutions over unnecessary complexity.
+- When modifying code, summarize the relevant changes.
