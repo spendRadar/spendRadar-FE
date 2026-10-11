@@ -1,3 +1,4 @@
+import { Bell } from 'lucide-react';
 import { useState } from 'react';
 
 const navItems = [
@@ -37,6 +38,14 @@ function Header() {
             </button>
           ))}
         </nav>
+        <div className='flex items-center justify-center'>
+          <button type='button' className='hover:bg-tertiary/10 rounded-full p-2'>
+            <div className='relative'>
+              <Bell className='size-5' />
+              <div className='absolute -top-1 -right-1 size-2 rounded-full bg-red-500' />
+            </div>
+          </button>
+        </div>
       </div>
     </header>
   );
