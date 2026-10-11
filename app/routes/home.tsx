@@ -3,6 +3,7 @@ import SummaryCard from '~/components/ui/summaryCard';
 import TransactionsCard from '~/components/ui/transactionsCard';
 import { mockTransactionMonths } from '~/mocks/transactions';
 import type { Route } from './+types/home';
+import TransactionToolBar from '~/components/layout/transactionToolBar';
 
 function seoulYearMonth(date: Date) {
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -31,6 +32,7 @@ export default function Home() {
 
   return (
     <div className='mx-auto flex w-full max-w-240 flex-col gap-5 px-4 pt-24'>
+      <TransactionToolBar />
       <div className='grid grid-cols-2 gap-5 lg:grid-cols-4'>
         <SummaryCard
           kind='income'

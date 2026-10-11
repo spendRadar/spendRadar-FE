@@ -60,7 +60,7 @@ function SummaryCard({ kind, amount, markContent, markIcon, subContent }: Summar
   const Icon = content.icon;
   const formattedAmount = formatKRW(amount);
   return (
-    <div className='flex h-auto min-h-34 w-full min-w-0 flex-col justify-between bg-white p-4'>
+    <div className='bg-white rounded-2xl flex h-auto min-h-34 w-full min-w-0 flex-col justify-between p-4'>
       <div className='flex items-center justify-between gap-2'>
         <div className='text-sm wrap-anywhere'>{content.title}</div>
         <Icon className={`size-6 shrink-0 rounded-full p-1 ${content.colorClassName}`} />
