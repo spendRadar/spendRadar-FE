@@ -1,7 +1,8 @@
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 import { shiftPeriod } from '~/lib/period';
 import { PeriodPickerDialog } from '~/components/layout/periodPickerDialog';
+import AddTransactionDialog from './AddTransactionDialog';
 
 interface TransactionToolBarProps {
   selectedYear: number;
@@ -51,13 +52,7 @@ function TransactionToolBar({
           <ChevronRight className='size-5' />
         </Button>
       </div>
-      <Button
-        variant='default'
-        className='flex h-auto flex-row items-center gap-2 rounded-full bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90'
-      >
-        <Plus className='size-5' />
-        <span className='text-base font-bold'>거래 내역 추가</span>
-      </Button>
+      <AddTransactionDialog />
     </div>
   );
 }
