@@ -8,7 +8,7 @@ import type { MetaFunction } from 'react-router';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'FinAI 자산 분석 & 금융 어시스턴트' },
+    { title: 'SpendRadar - Assets' },
     { name: 'description', content: 'FinAI 자산 분석 & 금융 어시스턴트 page of FinAI' },
   ];
 };

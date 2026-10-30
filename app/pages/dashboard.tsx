@@ -15,6 +15,14 @@ import {
   transactionCategories,
   type DashboardCategory,
 } from '~/types/transaction';
+import type { MetaFunction } from 'react-router';
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: 'SpendRadar - Dashboard' },
+    { name: 'description', content: 'Dashboard page of SpendRadar' },
+  ];
+};
 
 function Dashboard() {
   const [selectedYear, setSelectedYear] = useState(2025);
