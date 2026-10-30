@@ -1,4 +1,3 @@
-import { Bell } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 
@@ -25,7 +24,7 @@ function Header() {
             <img src='/logos/spendradar-logo.svg' alt='SpendRadar' className='size-10' />
             <div className='text-xl font-bold'>SpendRadar</div>
           </div>
-          <nav className='items-center rounded-full bg-[#eff4ff] p-1 gap-2 hidden sm:flex'>
+          <nav className='flex items-center gap-1 rounded-full bg-[#eff4ff] p-0.5 sm:gap-2 sm:p-1'>
             {navItems.map((item, index) => (
               <Button
                 key={item.label}
@@ -33,8 +32,8 @@ function Header() {
                 variant={activeTab === index ? 'default' : 'ghost'}
                 className={
                   activeTab === index
-                    ? 'h-auto rounded-full px-4 py-2 text-sm font-semibold shadow-sm'
-                    : 'h-auto rounded-full px-4 py-2 text-sm font-semibold text-secondary-foreground hover:bg-tertiary/10'
+                    ? 'h-auto rounded-full px-2.5 py-1 text-xs font-semibold shadow-sm sm:px-4 sm:py-2 sm:text-sm'
+                    : 'h-auto rounded-full px-2.5 py-1 text-xs font-semibold text-secondary-foreground hover:bg-tertiary/10 sm:px-4 sm:py-2 sm:text-sm'
                 }
                 onClick={() => handleTabClick(index)}
               >
@@ -42,14 +41,6 @@ function Header() {
               </Button>
             ))}
           </nav>
-          <div className='flex items-center justify-center'>
-            <Button variant='ghost' className='hover:bg-tertiary/10 rounded-full p-2'>
-              <div className='relative'>
-                <Bell className='size-5' />
-                <div className='absolute -top-1 -right-1 size-2 rounded-full bg-red-500' />
-              </div>
-            </Button>
-          </div>
         </div>
       </header>
       <Outlet />

@@ -212,7 +212,7 @@ function AddTransactionDialog() {
         }
       >
         <Plus className='size-5' />
-        <span className='text-base font-bold'>거래 내역 추가</span>
+        <span className='text-xs sm:text-base font-bold '>거래 내역 추가</span>
       </DialogTrigger>
       <DialogContent className='min-w-0 gap-8 overflow-hidden px-6 py-8 sm:max-w-xl'>
         <DialogHeader>

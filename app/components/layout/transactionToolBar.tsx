@@ -26,16 +26,16 @@ function TransactionToolBar({
   }
 
   return (
-    <div className='flex flex-row gap-6 bg-white p-6 items-center justify-between rounded-2xl shadow-sm'>
-      <div className='flex flex-row items-center gap-2 bg-tertiary/10 rounded-full px-4 py-2'>
+    <div className='flex flex-row gap-6 p-6 items-center justify-between '>
+      <div className='flex flex-row items-center gap-1 rounded-full bg-tertiary/10 px-2 py-1 sm:gap-2 sm:px-4 sm:py-2'>
         <Button
           type='button'
           variant='ghost'
-          className='hover:bg-tertiary/20 rounded-full p-1'
+          className='rounded-full p-0.5 hover:bg-tertiary/20 sm:p-1'
           disabled={shiftPeriod(selectedYear, selectedMonth, -1) === null}
           onClick={() => handleShiftPeriod(-1)}
         >
-          <ChevronLeft className='size-5' />
+          <ChevronLeft className='size-4 sm:size-5' />
         </Button>
         <PeriodPickerDialog
           selectedYear={selectedYear}
@@ -45,11 +45,11 @@ function TransactionToolBar({
         <Button
           type='button'
           variant='ghost'
-          className='hover:bg-tertiary/20 rounded-full p-1'
+          className='rounded-full p-0.5 hover:bg-tertiary/20 sm:p-1'
           disabled={shiftPeriod(selectedYear, selectedMonth, 1) === null}
           onClick={() => handleShiftPeriod(1)}
         >
-          <ChevronRight className='size-5' />
+          <ChevronRight className='size-4 sm:size-5' />
         </Button>
       </div>
       <AddTransactionDialog />

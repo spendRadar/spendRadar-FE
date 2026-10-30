@@ -93,7 +93,7 @@ export function PeriodPickerDialog({
         render={
           <Button
             variant='ghost'
-            className='w-36 rounded-full px-4 py-2 tabular-nums hover:bg-tertiary/20'
+            className='h-auto rounded-full py-1 tabular-nums hover:bg-tertiary/20 w-36 px-2 text-xs sm:px-4 sm:py-2 sm:text-sm'
           />
         }
       >
