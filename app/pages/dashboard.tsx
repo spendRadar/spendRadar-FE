@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react';
 import YearToolBar from '~/components/layout/yearToolBar';
 import CumulativeExpenseCard from '~/components/ui/cumulativeExpenseCard';
+import MonthlyExpenseChart from '~/components/ui/monthlyExpenseChart';
 import NextMonthForecastCard from '~/components/ui/nextMonthForecastCard';
 import { Button } from '~/components/ui/button';
 import { Separator } from '~/components/ui/separator';
 import { compareCumulativeExpense, confirmedExpenseThroughMonth } from '~/lib/cumulativeExpense';
+import { buildMonthlyExpenseBars } from '~/lib/monthlyExpenseChart';
 import { resolveNextMonthForecast } from '~/lib/nextMonthForecast';
 import { mockTransactionMonths } from '~/mocks/transactions';
 import { dashboardCategories, type DashboardCategory } from '~/types/transaction';
@@ -22,6 +24,16 @@ function Dashboard() {
   const nextMonthForecast = useMemo(
     () => resolveNextMonthForecast(mockTransactionMonths, selectedYear, selectedCategory),
     [selectedYear, selectedCategory],
+  );
+  const monthlyBars = useMemo(
+    () =>
+      buildMonthlyExpenseBars(
+        mockTransactionMonths,
+        selectedYear,
+        selectedCategory,
+        nextMonthForecast,
+      ),
+    [selectedYear, selectedCategory, nextMonthForecast],
   );
 
   function handleCategoryClick(category: DashboardCategory) {
@@ -75,6 +87,7 @@ function Dashboard() {
         <Separator className='my-4' />
         {comparison.currentTotal > 0 ? <CumulativeExpenseCard comparison={comparison} /> : null}
         {nextMonthForecast ? <NextMonthForecastCard forecast={nextMonthForecast} /> : null}
+        <MonthlyExpenseChart bars={monthlyBars} />
       </div>
     </div>
   );
