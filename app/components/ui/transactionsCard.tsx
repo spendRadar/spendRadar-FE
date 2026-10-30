@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Dot } from 'lucide-react';
-import type { TransactionDay, TransactionMonth } from '~/types/transaction';
+import ModifyTransactionDialog from '~/components/layout/ModifyTransactionDialog';
+import type { Transaction, TransactionDay, TransactionMonth } from '~/types/transaction';
 import TransactionItem from './transactionItem';
 
 interface TransactionsCardProps {
@@ -36,7 +38,15 @@ function formatDayBadge(date: string, today: string) {
   }).format(new Date(`${date}T00:00:00+09:00`));
 }
 
-function DaySection({ day, today }: { day: TransactionDay; today: string }) {
+function DaySection({
+  day,
+  today,
+  onEdit,
+}: {
+  day: TransactionDay;
+  today: string;
+  onEdit: (transaction: Transaction) => void;
+}) {
   return (
     <>
       <div className='flex flex-col gap-2'>
@@ -64,6 +74,7 @@ function DaySection({ day, today }: { day: TransactionDay; today: string }) {
             account={transaction.account}
             amount={transaction.amount}
             icon={transaction.icon}
+            onClick={() => onEdit(transaction)}
           />
         ))}
       </div>
@@ -74,6 +85,7 @@ function DaySection({ day, today }: { day: TransactionDay; today: string }) {
 function TransactionsCard({ month }: TransactionsCardProps) {
   const today = seoulISODate(new Date());
   const transactionCount = month.days.reduce((count, day) => count + day.transactions.length, 0);
+  const [editing, setEditing] = useState<{ date: string; transaction: Transaction } | null>(null);
 
   return (
     <div className='flex flex-col gap-6 bg-white p-6'>
@@ -84,8 +96,23 @@ function TransactionsCard({ month }: TransactionsCardProps) {
         </span>
       </div>
       {month.days.map((day) => (
-        <DaySection key={day.date} day={day} today={today} />
+        <DaySection
+          key={day.date}
+          day={day}
+          today={today}
+          onEdit={(transaction) => setEditing({ date: day.date, transaction })}
+        />
       ))}
+      <ModifyTransactionDialog
+        open={editing !== null}
+        transaction={editing?.transaction ?? null}
+        date={editing?.date ?? ''}
+        onOpenChange={(open) => {
+          if (!open) {
+            setEditing(null);
+          }
+        }}
+      />
     </div>
   );
 }
