@@ -10,6 +10,10 @@
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 html,
 body {
   @apply bg-[#f8f9ff] dark:bg-gray-950;
