@@ -1,7 +1,7 @@
 import { Bell } from 'lucide-react';
-import { useState } from 'react';
 import { Button } from '../ui/button';
-import { Outlet, useNavigate } from 'react-router';
+import { Outlet, useLocation, useNavigate } from 'react-router';
+
 const navItems = [
   { label: '가계부', path: 'home' },
   { label: '자산 분석', path: 'assets' },
@@ -9,13 +9,13 @@ const navItems = [
 ];
 
 function Header() {
-  const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const activeTab = navItems.findIndex((item) => pathname === `/${item.path}`);
 
-  const handleTabClick = (index: number) => {
-    setActiveTab(index);
+  function handleTabClick(index: number) {
     navigate(`/${navItems[index].path}`);
-  };
+  }
 
   return (
     <>
