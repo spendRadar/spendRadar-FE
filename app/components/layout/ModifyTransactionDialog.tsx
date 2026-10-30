@@ -23,6 +23,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from '~/components/u
 import { cn } from '~/lib/utils';
 import { addTransactionSchema, type AddTransactionSchema } from '~/schema/add-transaction';
 import {
+  transactionCategoryByLabel,
   transactionCategoryValues,
   type Transaction,
   type TransactionCategory,
@@ -43,26 +44,6 @@ const transactionCategories: TransactionCategoryOption[] = [
   { value: 'leisure', label: '문화 / 여가', icon: Clapperboard },
   { value: 'income', label: '급여 / 부수입', icon: Banknote },
 ];
-
-const transactionCategoryByLabel: Record<string, TransactionCategory> = {
-  식비: 'food',
-  '카페/디저트': 'food',
-  주거: 'housing',
-  통신: 'housing',
-  생활: 'housing',
-  보험: 'housing',
-  쇼핑: 'shopping',
-  선물: 'shopping',
-  교통: 'transport',
-  '문화/여가': 'leisure',
-  여행: 'leisure',
-  건강: 'leisure',
-  구독: 'leisure',
-  급여: 'income',
-  상여: 'income',
-  이자: 'income',
-  기타수입: 'income',
-};
 
 interface ModifyTransactionDialogProps {
   open: boolean;

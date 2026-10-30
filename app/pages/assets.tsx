@@ -55,9 +55,9 @@ function Assets() {
 
   return (
     <div className='mx-auto flex w-full max-w-240 flex-col gap-10 px-4 pt-24'>
-      <div className='flex flex-col gap-5'>
-        <h1 className='text-4xl font-bold'>FinAI 자산 분석 & 금융 어시스턴트</h1>
-        <p className='text-base text-secondary-foreground'>
+      <div className='flex flex-col gap-2'>
+        <h1 className='md:text-4xl text-2xl font-bold'>FinAI 자산 분석 & 금융 어시스턴트</h1>
+        <p className='text-xs sm:text-sm md:text-base text-secondary-foreground'>
           가계부 내역과 AI 지출 예측을 바탕으로 FinAI와 자유롭게 대화하고, 맞춤형 소비 분석과 지출
           관리 조언을 받아보세요.
         </p>
@@ -78,7 +78,7 @@ function Assets() {
               message.role === 'assistant' ? (
                 <div key={message.id} className='flex items-start gap-3'>
                   <div className='flex size-8 shrink-0 items-center justify-center rounded-full bg-secondary'>
-                    <BotIcon className='size-4 text-primary' />
+                    <BotIcon className='size-5 text-primary' />
                   </div>
                   <p className='max-w-[75%] rounded-2xl bg-[#eff4ff] px-4 py-3 text-sm leading-6'>
                     {message.content}

@@ -26,7 +26,7 @@ function TransactionToolBar({
   }
 
   return (
-    <div className='flex flex-row gap-6 bg-white p-6 items-center justify-between rounded-2xl'>
+    <div className='flex flex-row gap-6 bg-white p-6 items-center justify-between rounded-2xl shadow-sm'>
       <div className='flex flex-row items-center gap-2 bg-tertiary/10 rounded-full px-4 py-2'>
         <Button
           type='button'

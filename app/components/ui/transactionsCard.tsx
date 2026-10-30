@@ -88,7 +88,7 @@ function TransactionsCard({ month }: TransactionsCardProps) {
   const [editing, setEditing] = useState<{ date: string; transaction: Transaction } | null>(null);
 
   return (
-    <div className='flex flex-col gap-6 bg-white p-6'>
+    <div className='flex flex-col gap-6 bg-white p-6 rounded-2xl shadow-sm'>
       <div className='flex flex-row items-center gap-4'>
         <span className='text-xl font-bold'>{month.month}월 거래 내역</span>
         <span className='rounded-full bg-tertiary/10 px-2 py-1 text-sm font-bold text-gray-500'>

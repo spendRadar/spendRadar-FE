@@ -5,6 +5,16 @@ const lastYear = years[years.length - 1];
 
 export { years, months };
 
+export function shiftYear(year: number, direction: -1 | 1) {
+  const nextYear = year + direction;
+
+  if (nextYear < firstYear || nextYear > lastYear) {
+    return null;
+  }
+
+  return nextYear;
+}
+
 export function shiftPeriod(year: number, month: number, direction: -1 | 1) {
   const monthIndex = (year - firstYear) * 12 + (month - 1) + direction;
   const lastMonthIndex = (lastYear - firstYear + 1) * 12 - 1;

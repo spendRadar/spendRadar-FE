@@ -33,7 +33,7 @@ function Header() {
                 variant={activeTab === index ? 'default' : 'ghost'}
                 className={
                   activeTab === index
-                    ? 'h-auto rounded-full px-4 py-2 text-sm font-semibold'
+                    ? 'h-auto rounded-full px-4 py-2 text-sm font-semibold shadow-sm'
                     : 'h-auto rounded-full px-4 py-2 text-sm font-semibold text-secondary-foreground hover:bg-tertiary/10'
                 }
                 onClick={() => handleTabClick(index)}

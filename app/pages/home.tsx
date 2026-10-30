@@ -69,7 +69,7 @@ export default function Home() {
           subContent='초과 위험 낮음'
         />
       </div>
-      <div>
+      <div className='pb-6'>
         <TransactionsCard month={currentMonth} />
       </div>
     </div>

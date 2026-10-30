@@ -90,7 +90,12 @@ export function PeriodPickerDialog({
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger
-        render={<Button variant='ghost' className='hover:bg-tertiary/20 rounded-full px-4 py-2' />}
+        render={
+          <Button
+            variant='ghost'
+            className='w-36 rounded-full px-4 py-2 tabular-nums hover:bg-tertiary/20'
+          />
+        }
       >
         {selectedYear}년 {selectedMonth}월
       </DialogTrigger>
