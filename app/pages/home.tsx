@@ -7,16 +7,16 @@ import type { TransactionMonth } from '~/types/transaction';
 import { useState } from 'react';
 import type { MetaFunction } from 'react-router';
 
-function monthAmount(month: TransactionMonth, kind: 'income' | 'expense') {
-  return month.days.reduce((total, day) => total + day.summary[kind], 0);
-}
-
 export const meta: MetaFunction = () => {
   return [
     { title: 'SpendRadar' },
     { name: 'description', content: 'Expense tracker page of SpendRadar' },
   ];
 };
+
+function monthAmount(month: TransactionMonth, kind: 'income' | 'expense') {
+  return month.days.reduce((total, day) => total + day.summary[kind], 0);
+}
 
 export default function Home() {
   const [selectedYear, setSelectedYear] = useState(2025);

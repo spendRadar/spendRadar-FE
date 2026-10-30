@@ -4,6 +4,14 @@ import { Button } from '~/components/ui/button';
 import { ScrollArea } from '~/components/ui/scroll-area';
 import { Textarea } from '~/components/ui/textarea';
 import { mockChatMessages } from '~/mocks/chat';
+import type { MetaFunction } from 'react-router';
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: 'FinAI 자산 분석 & 금융 어시스턴트' },
+    { name: 'description', content: 'FinAI 자산 분석 & 금융 어시스턴트 page of FinAI' },
+  ];
+};
 
 function Assets() {
   const [messages, setMessages] = useState(mockChatMessages);
