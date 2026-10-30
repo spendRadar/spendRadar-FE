@@ -149,14 +149,6 @@ function transactionKindFromAmount(amount: number): TransactionKind {
   return amount < 0 ? 'expense' : 'income';
 }
 
-function formatSignedKRW(amount: number) {
-  const formatted = new Intl.NumberFormat('ko-KR', {
-    maximumFractionDigits: 0,
-  }).format(Math.abs(amount));
-
-  return `${amount < 0 ? '-' : ''}${formatted}원`;
-}
-
 function ModifyTransactionForm({
   transaction,
   date,
@@ -179,7 +171,6 @@ function ModifyTransactionForm({
   const selectedCategory =
     transactionCategories.find((item) => item.value === category) ?? transactionCategories[0];
   const SelectedCategoryIcon = selectedCategory.icon;
-  const TransactionIcon = transaction.icon;
 
   function clearFieldError(field: keyof AddTransactionSchema) {
     setFieldErrors((current) => {

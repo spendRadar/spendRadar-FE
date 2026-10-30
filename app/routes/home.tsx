@@ -2,21 +2,21 @@ import { ArrowUp, CircleAlert } from 'lucide-react';
 import SummaryCard from '~/components/ui/summaryCard';
 import TransactionsCard from '~/components/ui/transactionsCard';
 import { mockTransactionMonths } from '~/mocks/transactions';
-import type { Route } from './+types/home';
 import TransactionToolBar from '~/components/layout/transactionToolBar';
 import type { TransactionMonth } from '~/types/transaction';
 import { useState } from 'react';
+import type { MetaFunction } from 'react-router';
 
 function monthAmount(month: TransactionMonth, kind: 'income' | 'expense') {
   return month.days.reduce((total, day) => total + day.summary[kind], 0);
 }
 
-export function meta(_: Route.MetaArgs) {
+export const meta: MetaFunction = () => {
   return [
-    { title: 'New React Router App' },
-    { name: 'description', content: 'Welcome to React Router!' },
+    { title: 'SpendRadar' },
+    { name: 'description', content: 'Expense tracker page of SpendRadar' },
   ];
-}
+};
 
 export default function Home() {
   const [selectedYear, setSelectedYear] = useState(2025);
