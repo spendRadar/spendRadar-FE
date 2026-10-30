@@ -2,12 +2,7 @@ import { Bell } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 
-const navItems = [
-  { label: '가계부' },
-  { label: '자산 분석' },
-  { label: '예산 & 목표' },
-  { label: 'AI 리포트' },
-];
+const navItems = [{ label: '가계부' }, { label: '자산 분석' }, { label: '예산 & 목표' }];
 
 function Header() {
   const [activeTab, setActiveTab] = useState(0);
