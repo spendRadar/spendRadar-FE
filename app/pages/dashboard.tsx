@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import YearToolBar from '~/components/layout/yearToolBar';
+import CategoryForecastCard from '~/components/ui/categoryForecastCard';
 import CumulativeExpenseCard from '~/components/ui/cumulativeExpenseCard';
 import MonthlyExpenseChart from '~/components/ui/monthlyExpenseChart';
 import NextMonthForecastCard from '~/components/ui/nextMonthForecastCard';
@@ -9,7 +10,11 @@ import { compareCumulativeExpense, confirmedExpenseThroughMonth } from '~/lib/cu
 import { buildMonthlyExpenseBars } from '~/lib/monthlyExpenseChart';
 import { resolveNextMonthForecast } from '~/lib/nextMonthForecast';
 import { mockTransactionMonths } from '~/mocks/transactions';
-import { dashboardCategories, type DashboardCategory } from '~/types/transaction';
+import {
+  dashboardCategories,
+  transactionCategories,
+  type DashboardCategory,
+} from '~/types/transaction';
 
 function Dashboard() {
   const [selectedYear, setSelectedYear] = useState(2025);
@@ -24,6 +29,23 @@ function Dashboard() {
   const nextMonthForecast = useMemo(
     () => resolveNextMonthForecast(mockTransactionMonths, selectedYear, selectedCategory),
     [selectedYear, selectedCategory],
+  );
+  const categoryForecasts = useMemo(
+    () =>
+      transactionCategories.flatMap((category) => {
+        if (category.value === 'income') {
+          return [];
+        }
+
+        const forecast = resolveNextMonthForecast(
+          mockTransactionMonths,
+          selectedYear,
+          category.value,
+        );
+
+        return forecast ? [{ category, forecast }] : [];
+      }),
+    [selectedYear],
   );
   const monthlyBars = useMemo(
     () =>
@@ -89,6 +111,22 @@ function Dashboard() {
         {nextMonthForecast ? <NextMonthForecastCard forecast={nextMonthForecast} /> : null}
         <MonthlyExpenseChart bars={monthlyBars} />
       </div>
+      {categoryForecasts.length > 0 ? (
+        <div className='flex flex-col gap-2'>
+          <h2 className='text-xl font-bold'>카테고리별 정밀 예측</h2>
+          <Separator className='my-2' />
+          <div className='grid grid-cols-1 gap-3 md:grid-cols-2'>
+            {categoryForecasts.map(({ category, forecast }) => (
+              <CategoryForecastCard
+                key={category.value}
+                label={category.label}
+                icon={category.icon}
+                forecast={forecast}
+              />
+            ))}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

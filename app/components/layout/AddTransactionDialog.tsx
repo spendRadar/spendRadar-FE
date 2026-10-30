@@ -1,21 +1,12 @@
-import {
-  Banknote,
-  Car,
-  Clapperboard,
-  CreditCardPlus,
-  Hamburger,
-  House,
-  Plus,
-  ShoppingBag,
-} from 'lucide-react';
+import { CreditCardPlus, Plus } from 'lucide-react';
 import { useState, type ChangeEvent, type SubmitEvent } from 'react';
 import toast from 'react-hot-toast';
 import { flattenError, type ZodError } from 'zod';
 import { addTransactionSchema, type AddTransactionSchema } from '~/schema/add-transaction';
 import {
+  transactionCategories,
   transactionCategoryValues,
   type TransactionCategory,
-  type TransactionCategoryOption,
   type TransactionKind,
 } from '~/types/transaction';
 import { Button } from '~/components/ui/button';
@@ -84,15 +75,6 @@ function toFieldErrors(error: ZodError<AddTransactionSchema>): AddTransactionFie
 const transactionKinds: { value: TransactionKind; label: string }[] = [
   { value: 'expense', label: '지출 (Expense)' },
   { value: 'income', label: '수입 (Income)' },
-];
-
-const transactionCategories: TransactionCategoryOption[] = [
-  { value: 'food', label: '식비 / 카페', icon: Hamburger },
-  { value: 'housing', label: '주거 / 통신', icon: House },
-  { value: 'shopping', label: '쇼핑 / 패션', icon: ShoppingBag },
-  { value: 'transport', label: '교통 / 차량', icon: Car },
-  { value: 'leisure', label: '문화 / 여가', icon: Clapperboard },
-  { value: 'income', label: '급여 / 부수입', icon: Banknote },
 ];
 
 function caretIndexForDigitCount(formatted: string, digitCount: number) {

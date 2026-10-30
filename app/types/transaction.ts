@@ -1,4 +1,12 @@
-import type { LucideIcon } from 'lucide-react';
+import {
+  Banknote,
+  Car,
+  Clapperboard,
+  Hamburger,
+  House,
+  ShoppingBag,
+  type LucideIcon,
+} from 'lucide-react';
 
 export const transactionKindValues = ['expense', 'income'] as const;
 
@@ -53,6 +61,15 @@ export interface TransactionCategoryOption {
   label: string;
   icon: LucideIcon;
 }
+
+export const transactionCategories: TransactionCategoryOption[] = [
+  { value: 'food', label: '식비 / 카페', icon: Hamburger },
+  { value: 'housing', label: '주거 / 통신', icon: House },
+  { value: 'shopping', label: '쇼핑 / 패션', icon: ShoppingBag },
+  { value: 'transport', label: '교통 / 차량', icon: Car },
+  { value: 'leisure', label: '문화 / 여가', icon: Clapperboard },
+  { value: 'income', label: '급여 / 부수입', icon: Banknote },
+];
 
 export interface Transaction {
   id: string;
