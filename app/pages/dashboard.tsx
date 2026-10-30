@@ -123,7 +123,7 @@ function Dashboard() {
         <div className='flex flex-col gap-2'>
           <h2 className='text-xl font-bold'>카테고리별 정밀 예측</h2>
           <Separator className='my-2' />
-          <div className='grid grid-cols-1 gap-3 md:grid-cols-2'>
+          <div className='grid grid-cols-1 gap-3 md:grid-cols-2 pb-6'>
             {categoryForecasts.map(({ category, forecast }) => (
               <CategoryForecastCard
                 key={category.value}
