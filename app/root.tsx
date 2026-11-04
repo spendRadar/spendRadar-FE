@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import {
   isRouteErrorResponse,
   Links,
@@ -9,7 +10,6 @@ import {
 
 import type { Route } from './+types/root';
 import './app.css';
-import Header from './components/layout/header';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -34,8 +34,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Header />
         {children}
+        <Toaster position='top-center' containerStyle={{ top: '4.75rem' }} />
         <ScrollRestoration />
         <Scripts />
       </body>
